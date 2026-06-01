@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Meryeme</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐥</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0A0810;
+    --bg2:       #110E1A;
+    --bg3:       #181425;
+    --purple:    #7a46f1;
+    --purple-l:  #A78BFA;
+    --purple-d:  #4C1D95;
+    --purple-dim:#1E1535;
+    --border:    rgba(139,92,246,0.15);
+    --border2:   rgba(139,92,246,0.30);
+  }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg);
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(109,40,217,0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 72px 24px 44px;
+    animation: fadeUp 1.1s ease both;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--purple-l);
+    margin-bottom: 20px;
+  }
+
+  header h1 {
+    font-size: clamp(36px, 10vw, 62px);
+    font-weight: 300;
+    line-height: 1.12;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+  }
+
+  .header-rule {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 26px auto 0;
+    max-width: 180px;
+  }
+
+  .header-rule span { flex: 1; height: 0.5px; background: var(--border2); }
+
+  .diamond {
+    width: 5px;
+    height: 5px;
+    background: var(--purple);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .note-section {
+    position: relative;
+    z-index: 1;
+    padding: 52px 24px 56px;
+    max-width: 520px;
+    margin: 0 auto;
+    animation: fadeUp 1.2s ease both;
+    animation-delay: 0.12s;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--purple-l);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+
+  .note-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border2);
+    border-radius: 4px;
+    padding: 32px 28px 36px;
+    position: relative;
+  }
+
+  .note-card::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    left: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--purple), transparent);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .note-card p {
+    font-size: clamp(15px, 4vw, 17px);
+    font-weight: 300;
+    line-height: 1.85;
+    color: #ffffff;
+  }
+
+  .note-footer {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .note-footer .line { flex: 1; height: 0.5px; background: var(--border); }
+
+  .note-footer span {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 24px;
+    max-width: 520px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-divider .line { flex: 1; height: 0.5px; background: var(--border); }
+
+  .section-divider .ornament {
+    font-size: 14px;
+    color: var(--purple-d);
+  }
+
+  .video-section {
+    position: relative;
+    z-index: 1;
+    padding: 52px 24px 80px;
+    max-width: 520px;
+    margin: 0 auto;
+    animation: fadeUp 1.3s ease both;
+    animation-delay: 0.24s;
+  }
+
+  .video-title {
+    font-size: clamp(22px, 6vw, 28px);
+    font-weight: 400;
+    color: #ffffff;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+
+  .video-subtitle {
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 28px;
+  }
+
+  .video-btn {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--bg2);
+    border: 0.5px solid var(--border2);
+    border-radius: 4px;
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: background 0.35s, border-color 0.35s;
+    width: 100%;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(109,40,217,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+
+  .video-btn:hover, .video-btn:active {
+    border-color: var(--purple);
+    background: var(--bg3);
+  }
+
+  .video-btn:hover::after, .video-btn:active::after { opacity: 1; }
+
+  .btn-icon {
+    width: 46px;
+    height: 46px;
+    border: 0.5px solid var(--border2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--purple-dim);
+    position: relative;
+    z-index: 1;
+    transition: background 0.35s, border-color 0.35s;
+  }
+
+  .video-btn:hover .btn-icon, .video-btn:active .btn-icon {
+    background: var(--purple-d);
+    border-color: var(--purple);
+  }
+
+  .btn-icon svg { width: 18px; height: 18px; color: #ffffff; margin-left: 2px; }
+
+  .btn-text { position: relative; z-index: 1; }
+
+  .btn-text-main {
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffff;
+    display: block;
+  }
+
+  .btn-text-sub {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    display: block;
+    margin-top: 4px;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(4, 2, 8, 0.97);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+  }
+
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal-inner {
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+  }
+
+  .modal-x-close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    width: 38px;
+    height: 38px;
+    background: rgba(139,92,246,0.12);
+    border: 0.5px solid var(--border2);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .modal-x-close:hover, .modal-x-close:active {
+    background: rgba(139,92,246,0.28);
+    border-color: var(--purple);
+  }
+
+  .modal-x-close svg {
+    width: 16px;
+    height: 16px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: -42px;
+    right: 48px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+  }
+
+  .modal-close span {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .modal-close svg { width: 14px; height: 14px; color: rgba(255,255,255,0.4); }
+
+  .video-wrapper {
+    width: 100%;
+    aspect-ratio: 9/16;
+    background: #000;
+    border: 0.5px solid var(--border2);
+    overflow: hidden;
+    border-radius: 4px;
+  }
+
+  .video-wrapper video { width: 100%; height: 100%; object-fit: contain; }
+
+  .gif-section {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 24px 70px;
+  }
+
+  .gif-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg2);
+    border: 0.5px solid var(--border2);
+    border-radius: 4px;
+    padding: 16px 28px;
+    cursor: pointer;
+    transition: background 0.35s, border-color 0.35s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gif-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(139,92,246,0.08), transparent);
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+
+  .gif-btn:hover, .gif-btn:active {
+    border-color: var(--purple);
+    background: var(--bg3);
+  }
+
+  .gif-btn:hover::before, .gif-btn:active::before { opacity: 1; }
+
+  .gif-btn-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--purple-dim);
+    border: 0.5px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    transition: background 0.35s;
+  }
+
+  .gif-btn:hover .gif-btn-icon { background: var(--purple-d); }
+
+  .gif-btn-icon svg { width: 16px; height: 16px; color: #ffffff; }
+
+  .gif-btn-label {
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    position: relative;
+    z-index: 1;
+    transition: color 0.35s;
+  }
+
+  .gif-btn:hover .gif-btn-label { color: rgba(255,255,255,0.85); }
+
+  .gif-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(4, 2, 8, 0.97);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.45s ease;
+  }
+
+  .gif-modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .gif-modal-inner {
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    text-align: center;
+  }
+
+  .gif-modal-x {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    width: 38px;
+    height: 38px;
+    background: rgba(139,92,246,0.12);
+    border: 0.5px solid var(--border2);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .gif-modal-x:hover, .gif-modal-x:active {
+    background: rgba(139,92,246,0.28);
+    border-color: var(--purple);
+  }
+
+  .gif-modal-x svg { width: 16px; height: 16px; color: rgba(255,255,255,0.7); }
+
+  .gif-modal-inner img {
+    width: 100%;
+    border-radius: 4px;
+    border: 0.5px solid var(--border2);
+    display: block;
+  }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 24px 60px;
+  }
+
+  footer p {
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.25);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Sadece sana özel Meryemim</p>
+  <h1>Seninle her anım<br>çok güzel</h1>
+  <div class="header-rule">
+    <span></span>
+    <div class="diamond"></div>
+    <span></span>
+  </div>
+</header>
+
+<section class="note-section">
+  <p class="section-label">Sevdiceğime ufak bir not</p>
+  <div class="note-card">
+    <p>
+      Senin mesajını her gördüğümde, gülüşünü her duyduğumda dünya benim için biraz daha yaşanabilir bir yer haline geliyor aşkım.<br><br>
+      Kısacık ömrümde başıma gelen en güzel şeyin sen olduğunu hiçbir zaman unutma. Baktığım her yerde sen olmasan bile gözümün daldığı her yerde sen varsın.<br><br>
+      Zor zamanlardan geçiyoruz ama bunların hepsini ellerin ellerimde, gözlerin gözlerimde, saçların saçlarımda aşacağız.<br><br>
+      Günün sonunda ne olursa olsun seninle beraber olmak, senin sesini duymak bana öylesine derin ve daha önce tatmadığım bir huzur veriyor ki bunu sana asla tarif edemem.
+      Gün içinde kendimi kötü hissetiğim anlarda aklıma sen gelince yüzümün nasıl aydınladığını ve gözlerimin nasıl güldüğünü sana o kadar çok göstermek isterdim ki tarifi zor.<br><br>
+      Şimdi ben bu satırları senin için ellerimle yazarken sen çok yorgun bir şekilde uykuya daldın bile. Şu anda senin yanında
+      o uykulu nefes sesini vücudumda hissetmek için nelerden vazgeçerdim bir bilsen. Ama ben burada senin için uyanığım. Kendini iyi hissetmediğini söylediğin zamanlar
+      içimde o kadar fazla bir şeyler yapma isteği uyanıyor ki yerimde duramıyorum. Sen iyi ol diye diyarları gezer, dünyayı karşıma alırım. Sesin cehennemden gelse
+      cennetten vazgeçer sana doğru koşarım. Fiziksel olarak şu an yanında olmasam bile desteğimi, inancımı, sevgimi, umudumu her şeyimi tek tek
+      sana hissetirmek için elimden geleni yaparım sevgilim. Seni çok seviyorum. Bu dünyada başıma gelen en güzel şeysin...<br><br>
+      <b>-Sevgilin Sefa (TED)</b>
+    </p>
+    <div class="note-footer">
+      <span class="line"></span>
+      <span>Zamanı seninle durdurdum</span>
+      <span class="line"></span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider">
+  <div class="line"></div>
+  <span class="ornament">✦</span>
+  <div class="line"></div>
+</div>
+
+<section class="video-section">
+  <p class="section-label">Benim için çok özel bir video</p>
+  <h2 class="video-title">Bunu mutlaka izlemelisin</h2>
+
+  <button class="video-btn" onclick="openModal()">
+    <div class="btn-icon">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </div>
+    <div class="btn-text">
+      <span class="btn-text-main">Videoyu Oynat</span>
+    </div>
+  </button>
+</section>
+
+<div class="section-divider" style="margin-bottom: 40px;">
+  <div class="line"></div>
+  <span class="ornament">✦</span>
+  <div class="line"></div>
+</div>
+
+<!-- GIF -->
+<div class="gif-section">
+  <button class="gif-btn" onclick="openGifModal()">
+    <div class="gif-btn-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9z"/>
+        <path d="M12 8v4l3 3"/>
+      </svg>
+    </div>
+    <span class="gif-btn-label">Gizemli sürpriz</span>
+  </button>
+</div>
+
+<footer>
+  <p>Seninle her şey daha güzel ✦</p>
+</footer>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal-inner">
+    <button class="modal-x-close" onclick="closeModal()" aria-label="Kapat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <div class="video-wrapper">
+      <video id="vid" controls playsinline>
+        <source src="video.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</div>
+
+<div class="gif-modal-overlay" id="gifModal">
+  <div class="gif-modal-inner">
+    <button class="gif-modal-x" onclick="closeGifModal()" aria-label="Kapat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <img src="secret.gif" alt="sürpriz gif">
+  </div>
+</div>
+
+<script>
+  const modal    = document.getElementById('modal');
+  const vid      = document.getElementById('vid');
+  const gifModal = document.getElementById('gifModal');
+
+  function openModal() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    vid.play();
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    vid.pause();
+    vid.currentTime = 0;
+  }
+
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+
+  function openGifModal() {
+    gifModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeGifModal() {
+    gifModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  gifModal.addEventListener('click', function(e) {
+    if (e.target === gifModal) closeGifModal();
+  });
+</script>
+</body>
+</html>
